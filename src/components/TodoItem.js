@@ -1,6 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { MdDone, MdDelete } from 'react-icons/md';
+import { useTodoDispatch } from "../TodoContext";
 
 const CheckCircle = styled.div`
   width: 32px;
@@ -50,17 +51,34 @@ const TodoItemBlock = styled.div`
 `
 
 function TodoItem ({ id, done, text }) {
+  const dispatch = useTodoDispatch()
+  const onToggle = () => dispatch({
+    type: 'TOGGLE',
+    id
+  })
+  const onRemove = () => dispatch({
+    type: 'REMOVE',
+    id
+  })
+
   return (
     <TodoItemBlock>
-      <CheckCircle done={done}>
+      <CheckCircle 
+        done={done}
+        onClick={onToggle}
+      >
         {done && <MdDone />}
       </CheckCircle>
       <Text done={done}>{text}</Text>
-      <Remove>
+      <Remove onClick={onRemove}>
         <MdDelete />
       </Remove>
     </TodoItemBlock>
   )
 }
 
-export default TodoItem;
+/* TodoItem에서는 useTodoDispatch만 필요하다.
+   TodoContext.js에서 useStateContext, useDispatchContext를 분리해서 작성했기 때문에
+   useTodoDispatch만 가져와서 사용하고 내보내기 할 때 React.memo로 감싸면 쉽게 최적화를 할 수 있다.
+*/
+export default React.memo(TodoItem);
