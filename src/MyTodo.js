@@ -3,14 +3,17 @@ import TodoTemplate from "./components/MyTodo/TodoTemplate";
 import TodoHead from "./components/MyTodo/TodoHead";
 import TodoList from "./components/MyTodo/TodoList";
 import TodoCreate from "./components/MyTodo/TodoCreate";
+import { MyTodoProvider } from "./MyTodoContext";
 
 function MyTodo () {
   return (
-    <TodoTemplate>
-      <TodoHead />
-      <TodoList />
-      <TodoCreate />
-    </TodoTemplate>
+    <MyTodoProvider>
+      <TodoTemplate>
+        <TodoHead />
+        <TodoList />
+        <TodoCreate />
+      </TodoTemplate>
+    </MyTodoProvider>
   )
 }
 
